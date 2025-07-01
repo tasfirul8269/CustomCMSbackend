@@ -12,12 +12,12 @@ const moderatorPermissions = [
 ];
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  name: { type: String },
+  email: { type: String, unique: true },
+  password: { type: String },
   profileImage: { type: String }, // Cloudinary URL
-  role: { type: String, enum: ['admin', 'moderator'], required: true },
-  permissions: [{ type: String, enum: moderatorPermissions }], // Only for moderators
+  role: { type: String, enum: ['admin', 'moderator'] },
+  permissions: [{ type: String }], // Only for moderators
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema); 

@@ -10,7 +10,11 @@ const createCRUDController = (Model) => ({
   },
   getAll: async (req, res) => {
     try {
-      const items = await Model.find(req.query);
+      let query = Model.find(req.query);
+      if (Model.modelName === 'Student') {
+        query = query.populate('bookedBy', 'name email');
+      }
+      const items = await query;
       res.status(200).json(items);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -18,7 +22,11 @@ const createCRUDController = (Model) => ({
   },
   getById: async (req, res) => {
     try {
-      const item = await Model.findById(req.params.id);
+      let query = Model.findById(req.params.id);
+      if (Model.modelName === 'Student') {
+        query = query.populate('bookedBy', 'name email');
+      }
+      const item = await query;
       if (!item) {
         return res.status(404).json({ message: 'Item not found' });
       }
