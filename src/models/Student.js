@@ -35,6 +35,10 @@ const studentSchema = new mongoose.Schema({
     batch: { type: String },
     status: { type: String }, // 'yes' or 'no'
   },
+  microtech: {
+    batch: { type: String },
+    status: { type: String }, // 'yes' or 'no'
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Student', studentSchema); 
