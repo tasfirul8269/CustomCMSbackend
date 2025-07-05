@@ -13,7 +13,7 @@ const moderatorPermissions = [
 
 const userSchema = new mongoose.Schema({
   name: { type: String },
-  email: { type: String, unique: true },
+  email: { type: String },
   password: { type: String },
   profileImage: { type: String }, // Cloudinary URL
   role: { type: String, enum: ['admin', 'moderator'] },

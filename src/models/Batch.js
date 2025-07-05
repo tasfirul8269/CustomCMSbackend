@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const batchSchema = new mongoose.Schema({
-  batchNo: { type: String, unique: true },
+  batchNo: { type: String },
   subjectCourse: { type: String },
   startingDate: { type: Date },
   endingDate: { type: Date },
