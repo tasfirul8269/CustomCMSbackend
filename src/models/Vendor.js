@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const vendorSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
+  name: { type: String },
+  email: { type: String, unique: true },
   phone: { type: String },
   company: { type: String },
   services: [{ type: String }],

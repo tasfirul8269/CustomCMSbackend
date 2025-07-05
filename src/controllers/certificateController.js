@@ -4,9 +4,6 @@ const certificateController = {
   create: async (req, res) => {
     try {
       const { student, course, ...otherData } = req.body;
-      if (!student || !course) {
-        return res.status(400).json({ message: 'Student and course are required' });
-      }
       const newItem = new Certificate({ student, course, ...otherData });
       await newItem.save();
       const populatedItem = await newItem.populate([

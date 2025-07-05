@@ -26,17 +26,11 @@ exports.getAllUsers = async (req, res) => {
 exports.register = async (req, res) => {
   try {
     const { name, email, password, role, permissions, profileImage } = req.body;
-    if (!name || !email || !password || !role) {
-      return res.status(400).json({ message: 'Name, email, password, and role are required' });
-    }
-    if (role === 'moderator' && (!permissions || !permissions.length)) {
-      return res.status(400).json({ message: 'Permissions are required for moderators' });
-    }
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = password ? await bcrypt.hash(password, 10) : '';
     const user = new User({
       name,
       email,

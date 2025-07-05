@@ -1,21 +1,21 @@
 const mongoose = require('mongoose');
 
 const employeeSchema = new mongoose.Schema({
-  fullName: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  mobileNumber: { type: String, required: true },
-  addressLine1: { type: String, required: true },
+  fullName: { type: String },
+  email: { type: String, unique: true },
+  mobileNumber: { type: String },
+  addressLine1: { type: String },
   addressLine2: { type: String },
   position: { type: String, enum: ['Manager', 'Supervisor', 'Staff'], default: 'Staff' },
   status: { type: String, enum: ['Live', 'Inactive'], default: 'Live' },
-  dateOfBirth: { type: Date, required: true },
-  licenseNumber: { type: String, required: true },
-  joiningDate: { type: Date, required: true },
+  dateOfBirth: { type: Date },
+  licenseNumber: { type: String },
+  joiningDate: { type: Date },
   leavingDate: { type: Date },
   contactNumber: { type: String },
-  gender: { type: String, required: true },
+  gender: { type: String },
   employeeVendor: { type: String },
-  note: { type: String, required: true },
+  note: { type: String },
   photo: { type: String }, // URL to uploaded photo
   signature: { type: String }, // URL to uploaded signature
 }, { timestamps: true });
