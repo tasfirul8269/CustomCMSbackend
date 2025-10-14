@@ -12,6 +12,9 @@ const corsOptions = {
   origin: [
     'http://localhost:3000',
     'http://localhost:5173',
+    'http://31.97.230.253',
+    'http://31.97.230.253:3000',
+    'http://31.97.230.253:5173',
     'https://custom-crm-eta.vercel.app',  // Replace with your Vercel app URL
   ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
