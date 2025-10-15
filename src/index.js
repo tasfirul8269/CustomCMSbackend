@@ -15,7 +15,8 @@ const corsOptions = {
     'http://31.97.230.253',
     'http://31.97.230.253:3000',
     'http://31.97.230.253:5173',
-    'https://custom-crm-eta.vercel.app',  // Replace with your Vercel app URL
+    'https://custom-crm-eta.vercel.app',
+    'database.aettraining.co.uk', // Replace with your Vercel app URL
   ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
