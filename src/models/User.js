@@ -17,7 +17,10 @@ const userSchema = new mongoose.Schema({
   password: { type: String },
   profileImage: { type: String }, // Cloudinary URL
   role: { type: String, enum: ['admin', 'moderator'] },
-  permissions: [{ type: String }], // Only for moderators
+  permissions: [{
+    resource: { type: String },
+    access: { type: String, enum: ['read', 'write'] }
+  }], // Only for moderators - array of objects with resource and access level
 }, { timestamps: true });
 
 module.exports = mongoose.model('User', userSchema); 

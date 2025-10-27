@@ -24,18 +24,28 @@ const authorize = (roles = []) => {
   };
 };
 
-const authorizePermission = (resource) => (req, res, next) => {
+const authorizePermission = (resource, requiredAccess = 'read') => (req, res, next) => {
   const { role, permissions } = req.user;
 
   if (role === 'admin') {
     return next();
   }
 
-  if (role === 'moderator' && permissions.includes(resource)) {
-    return next();
+  if (role === 'moderator') {
+    const permission = permissions.find(p => p.resource === resource);
+    
+    if (permission) {
+      // If user has write access, they can also read
+      if (permission.access === 'write' || 
+          (requiredAccess === 'read' && permission.access === 'read')) {
+        return next();
+      }
+    }
   }
 
-  return res.status(403).json({ message: 'Forbidden: You do not have permission to access this resource.' });
+  return res.status(403).json({ 
+    message: `Forbidden: You do not have ${requiredAccess} permission for ${resource}.` 
+  });
 };
 
 module.exports = { auth, authorize, authorizePermission }; 

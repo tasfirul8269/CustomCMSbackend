@@ -11,7 +11,7 @@ const app = express();
 const corsOptions = {
   origin: [
     'http://localhost:3000',
-    'http://localhost:5173',
+    'http://localhost:5174',
     'http://31.97.230.253',
     'http://31.97.230.253:3000',
     'http://31.97.230.253:5173',

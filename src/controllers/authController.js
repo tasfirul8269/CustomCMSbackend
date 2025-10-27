@@ -114,6 +114,21 @@ exports.login = async (req, res) => {
     if (!user) return res.status(400).json({ message: 'Invalid credentials' });
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+    
+    // Migrate old permissions format to new format if needed
+    let permissions = user.permissions;
+    if (permissions && permissions.length > 0 && typeof permissions[0] === 'string') {
+      // Convert old format [string, string] to new format [{resource, access}]
+      permissions = permissions.map(permission => ({
+        resource: permission,
+        access: 'read' // Default to read access for migrated permissions
+      }));
+      
+      // Update user in database
+      user.permissions = permissions;
+      await user.save();
+    }
+    
     const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' });
     res.json({ 
       token, 

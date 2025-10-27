@@ -17,25 +17,33 @@ const models = {
 
 // Special route for certificates using its own controller
 const certificateRouter = express.Router();
-certificateRouter.use(auth, authorizePermission('certificates'));
-certificateRouter.post('/', certificateController.create);
-certificateRouter.get('/', certificateController.getAll);
-certificateRouter.get('/:id', certificateController.getById);
-certificateRouter.patch('/:id', certificateController.update);
-certificateRouter.delete('/:id', certificateController.delete);
+certificateRouter.use(auth);
+
+// Read operations
+certificateRouter.get('/', authorizePermission('certifications', 'read'), certificateController.getAll);
+certificateRouter.get('/:id', authorizePermission('certifications', 'read'), certificateController.getById);
+
+// Write operations
+certificateRouter.post('/', authorizePermission('certifications', 'write'), certificateController.create);
+certificateRouter.patch('/:id', authorizePermission('certifications', 'write'), certificateController.update);
+certificateRouter.delete('/:id', authorizePermission('certifications', 'write'), certificateController.delete);
+
 router.use('/certificates', certificateRouter);
 
 for (const [resource, model] of Object.entries(models)) {
   const resourceRouter = express.Router();
   const controller = createCRUDController(model);
 
-  resourceRouter.use(auth, authorizePermission(resource));
+  resourceRouter.use(auth);
 
-  resourceRouter.post('/', controller.create);
-  resourceRouter.get('/', controller.getAll);
-  resourceRouter.get('/:id', controller.getById);
-  resourceRouter.patch('/:id', controller.update);
-  resourceRouter.delete('/:id', controller.delete);
+  // Read operations
+  resourceRouter.get('/', authorizePermission(resource, 'read'), controller.getAll);
+  resourceRouter.get('/:id', authorizePermission(resource, 'read'), controller.getById);
+
+  // Write operations
+  resourceRouter.post('/', authorizePermission(resource, 'write'), controller.create);
+  resourceRouter.patch('/:id', authorizePermission(resource, 'write'), controller.update);
+  resourceRouter.delete('/:id', authorizePermission(resource, 'write'), controller.delete);
 
   router.use(`/${resource}`, resourceRouter);
 }
